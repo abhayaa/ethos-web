@@ -3,19 +3,19 @@ import Footer from '../Footer';
 import LoggedInNav from '../LoggedInNav';
 import DashHero from '../DashHero';
 import axios from 'axios';
-import Navbar from '../Navbar';
+
+import { HeroContainer } from '../DashHero/DashHeroElements';
 
 // const passport = require('passport');
 // const DiscordStrategy = require('passport-discord').Strategy
 
 const DashPage = () => {
     
-    //let userId, email, access, refresh, avi;
-
     const [userExists, setUserExists] = useState(false);
 
     let link = window.location.href;
     let code = link.substring(link.indexOf('code=') + 5);
+    console.log(code);
 
     const params = new URLSearchParams();
     params.append('client_id', process.env.REACT_APP_CLIENT_ID);
@@ -24,51 +24,41 @@ const DashPage = () => {
     params.append('code', code);
     params.append('redirect_uri', 'http://localhost:3000/dashboard');
 
-
-    if(localStorage.getItem('accessToken') === 'undefined'){
-    fetch('https://discord.com/api/oauth2/token', { method: 'POST', body: params })
-        .then(res => res.json())
-        .then(json => {
-            //access = json.access_token;
-            //refresh = json.refresh_token;
-            localStorage.setItem('accessToken', json.access_token)
-        });
-    }
-    console.log(localStorage)
-
-    let token = "Bearer " + localStorage.getItem('accessToken');
-    const authParams = new URLSearchParams();
-    authParams.append("Authorization", token);
-    authParams.append("Content-Type", "application/x-www-form-urlencoded")
-    
-    
-    // fetch('https://discord.com/api/users/@me', { method: 'PATCH', body: authParams })
-    //     .then(res => res.json())
-    //     .then(json => {
-    //         console.log(json);
-    //     });
-
-    
-
-    const stuff = new URLSearchParams();
-    stuff.append('Id', "dsdsdsd" );
-    stuff.append('Key', process.env.REACT_APP_API_KEY);
-    axios({
-        method: "post",
-        url:
-          "http://localhost:8000/users/usercheck",
-        data: { Id: "", Key: process.env.REACT_APP_API_KEY },
-        headers: { "Content-Type": "application/json" }
-      }).then(response => {
-        if(response.data.found === true){
-            setUserExists(true);
+    const getCode  = async() => {
+        if(localStorage.getItem('loggedIn') !== true){
+        await fetch('https://discord.com/api/oauth2/token', { method: 'POST', body: params })
+            .then(res => res.json())
+            .then(json => {
+                localStorage.setItem("code", code)
+                console.log(localStorage)
+                
+                const getUserInfo = async() => {
+                    if(localStorage.getItem("code") !== "undefined"){
+                        await axios({
+                            method: "post",
+                            url:
+                            "http://localhost:8000/discord/auth",
+                            data: { Code: json.access_token, Key: process.env.REACT_APP_API_KEY },
+                            headers: { "Content-Type": "application/json" }
+                        }).then(response => {
+                            if(response.data.found === true){
+                                console.log(response);
+                                setUserExists(true);
+                                localStorage.setItem("loggedIn", true)
+                            }
+                        });
+                    }
+                }
+                getUserInfo()
+            });
         }
-    });
+    }
+    getCode()
 
     return (
         <>
-            { userExists? <LoggedInNav /> : <Navbar /> }
-            <DashHero />
+            <LoggedInNav />
+            {userExists ? <DashHero /> : <HeroContainer /> }
             <Footer />
         </>
     )

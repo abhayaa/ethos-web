@@ -17,6 +17,7 @@ import {
 const Navbar = ({ toggle }) => {
 
     const [scrollNav, setScrollNav] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(false);
 
     const changeNav = ()=> {
         if(window.scrollY >= 80){
@@ -34,23 +35,24 @@ const Navbar = ({ toggle }) => {
         scroll.scrollToTop();
     }
 
+
     return (
        <>
        <IconContext.Provider value={{ color: '#fff'}}>
             <Nav scrollNav={scrollNav}>
                 <NavbarContainer>
-                    <NavLogo to='/#' onClick={toggleHome}>ethos</NavLogo>
+                    <NavLogo to='/' onClick={toggleHome}>ethos</NavLogo>
                     <MobileIcon onClick={toggle}>
                         <FaBars />
                     </MobileIcon>
                     <NavMenu>
                         <NavItem>
-                            <NavLinks to="about/#" 
+                            <NavLinks to="about" 
                             smooth={true} duration={600} spy={true} exact='true' offset={-80}
                             >about</NavLinks>
                         </NavItem>
                         <NavItem>
-                            <NavLinks to="partnerships/#"
+                            <NavLinks to="partnerships"
                             smooth={true} duration={600} spy={true} exact='true' offset={-80}
                             >partnerships</NavLinks>
                         </NavItem>
