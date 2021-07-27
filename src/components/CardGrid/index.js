@@ -26,19 +26,27 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(2)
     },
     typography: {
+        display:'flex',
         color: 'gray',
-        padding:'25px',
-        fontFamily: 'monospace'
+        paddingTop:'25px',
+        fontFamily: 'monospace',
+        paddingLeft:'25px'
     },
     button: {
         justifyContent: 'center',
         paddingLeft: '70px',
-        paddingTop: '50px'
+        paddingTop: '20px',
+    },
+    props: {
+        color: 'gray',
+        paddingLeft: '25px',
+        fontFamily: 'monospace',
+        paddingBottom: '40px'
     }
 }));
 
 
-const PaperGrid = () => {
+const PaperGrid = props => {
 
     const [spacing, setSpacing] = React.useState(2);
     const classes = useStyles();
@@ -49,16 +57,11 @@ const PaperGrid = () => {
                 <Grid container justifyContent="center" spacing={spacing}>
                     <Grid item>
                      <Paper elevation={6} className={classes.paper} >
-                        <Typography className={classes.typography}>Price</Typography>
-                        <Typography className={classes.typography}>Email</Typography>
-                     </Paper>
-                    </Grid>
-                    <Grid item>
-                     <Paper elevation={6} className={classes.paper} >
-                        <Typography className={classes.typography}>License Key</Typography>
+                        <Typography className={classes.typography}>{props.license}</Typography>
                         <IconButton size='small' className={classes.button}>
                             <img src={DiscordButton}  alt='Join Discord' width="150" height="50" />
                         </IconButton>
+                        <Typography className={classes.typography}>{props.expiration}</Typography>
                      </Paper>
                     </Grid>
                     <Grid item>

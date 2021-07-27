@@ -11,7 +11,7 @@ import {
 } from './DashHeroElements';
 
 
-const DashHero = () => {
+const DashHero = props => {
 
     return (
         <HeroContainer>
@@ -19,7 +19,7 @@ const DashHero = () => {
                 <VideoBg autoPlay loop muted src={Video} type='video/mp4' />
             </HeroBg>
             <HeroContent>
-                <CardGrid />
+                <CardGrid expiration={props.expiration} license={props.license} email={props.email}/>
             </HeroContent>
         </HeroContainer>
     )

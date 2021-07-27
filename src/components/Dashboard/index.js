@@ -11,11 +11,10 @@ import { HeroContainer } from '../DashHero/DashHeroElements';
 
 const DashPage = () => {
     
-    const [userExists, setUserExists] = useState(false);
+    const [userExists, setUserExists] = useState(localStorage.getItem('loggedIn'));
 
     let link = window.location.href;
     let code = link.substring(link.indexOf('code=') + 5);
-    console.log(code);
 
     const params = new URLSearchParams();
     params.append('client_id', process.env.REACT_APP_CLIENT_ID);
@@ -29,9 +28,7 @@ const DashPage = () => {
         await fetch('https://discord.com/api/oauth2/token', { method: 'POST', body: params })
             .then(res => res.json())
             .then(json => {
-                localStorage.setItem("code", code)
-                console.log(localStorage)
-                
+                localStorage.setItem("code", code)                
                 const getUserInfo = async() => {
                     if(localStorage.getItem("code") !== "undefined"){
                         await axios({
@@ -42,9 +39,27 @@ const DashPage = () => {
                             headers: { "Content-Type": "application/json" }
                         }).then(response => {
                             if(response.data.found === true){
-                                console.log(response);
                                 setUserExists(true);
                                 localStorage.setItem("loggedIn", true)
+                                localStorage.setItem("ethoskey", response.data.ethosKey)
+                                localStorage.setItem("expiration", response.data.expiration)
+                                localStorage.setItem("memberType", response.data.memberType)
+                                localStorage.setItem("plan", response.data.plan)
+                                localStorage.setItem("username", response.data.username)
+                                if(response.data.avatar.indexOf('a_') > -1){
+                                    localStorage.setItem("avatar", 
+                                        'https://cdn.discordapp.com/avatars/' +
+                                        response.data.userId + '/'+
+                                        response.data.avatar + '.gif' 
+                                    )
+                                }else {
+                                    localStorage.setItem("avatar", 
+                                        'https://cdn.discordapp.com/avatars/' +
+                                        response.data.userId + '/'+
+                                        response.data.avatar + '.png' 
+                                    )
+                                }
+                                console.log(response);
                             }
                         });
                     }
@@ -55,10 +70,12 @@ const DashPage = () => {
     }
     getCode()
 
+    console.log(localStorage)
+
     return (
         <>
-            <LoggedInNav />
-            {userExists ? <DashHero /> : <HeroContainer /> }
+            <LoggedInNav avatar={localStorage.getItem('avatar')}/>
+            {userExists ? <DashHero expiration={localStorage.getItem('expiration')} license={localStorage.getItem('ethoskey')}/> : <HeroContainer /> }
             <Footer />
         </>
     )

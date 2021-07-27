@@ -14,7 +14,7 @@ import {
 import { Avatar } from '@material-ui/core';
 
 
-const LoggedInNav = ({ toggle }) => {
+const LoggedInNav = props => {
 
     const [scrollNav, setScrollNav] = useState(false);
 
@@ -24,6 +24,10 @@ const LoggedInNav = ({ toggle }) => {
         } else {
             setScrollNav(false);
         }
+    }
+
+    const logout = () => {
+        localStorage.clear();
     }
 
     useEffect(() =>{
@@ -42,11 +46,11 @@ const LoggedInNav = ({ toggle }) => {
                     <NavLogo onClick={toggleHome}>ethos</NavLogo>
                     <NavMenu>
                     <NavItem> 
-                    <Avatar alt="Remy Sharp" src="https://media.giphy.com/media/OkhbcKxPDCKli/giphy.gif" />
+                    <Avatar alt={props.text} src={props.avatar} />
                     </NavItem>
                     </NavMenu>
                     <NavBtn>
-                        <NavBtnLink to="/#">logout</NavBtnLink>
+                        <NavBtnLink to="/#" onClick={logout}>logout</NavBtnLink>
                     </NavBtn>
                 </NavbarContainer>
             </Nav>
