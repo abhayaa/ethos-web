@@ -21,6 +21,17 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 10,
       boxShadow: 'red',
       textAlign:'left',
+      alignItems: 'center',
+      border:'10px',
+      borderColor: 'white'
+    },
+    cardPaper: {
+        height: 150,
+        width: 250,
+        background: 'linear-gradient(to right bottom,#9A88A4, #515ada)',
+        borderRadius: 15,
+        boxShadow: 'white',
+        textAlign: 'left'
     },
     control: {
       padding: theme.spacing(2)
@@ -50,6 +61,14 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: '10px',
         paddingTop: '10px',
         fontFamily: 'monospace'
+    },
+    cardText: {
+        display: 'flex',
+        color: 'white',
+        fontSize:'15px',
+        paddingLeft: '10px',
+        paddingTop: '10px',
+        fontFamily: 'monospace'
     }
 }));
 
@@ -68,11 +87,11 @@ const PaperGrid = props => {
                         <Typography className={classes.labels}>License Key: </Typography>
                         <Typography className={classes.typography}>{props.license}</Typography>
 
-                        <Typography className={classes.labels}>Expiration:  </Typography>
+                        <Typography className={classes.labels}>Renewal Date:  </Typography>
                         <Typography className={classes.typography}>{props.expiration} EST</Typography>
 
                         <Typography className={classes.labels}>Price:  </Typography>
-                        <Typography className={classes.typography}>$xx.xx/mo</Typography>
+                        <Typography className={classes.typography}>$50.00/mo</Typography>
 
                         <IconButton size='small' className={classes.button}>
                             <img src={DiscordButton}  alt='Join Discord' width="150" height="50" />
@@ -81,16 +100,23 @@ const PaperGrid = props => {
                     </Grid>
 
                     <Grid item>
-                     <Paper elevation={6} className={classes.paper} >
-                        <Typography className={classes.labels}>Payment: </Typography>
-                        <Typography className={classes.typography}></Typography>
-                        
-                        <Grid item xs={8}>
-                            <EditIcon />
-                        </Grid>
-                     </Paper>
-                    </Grid>
-                    <Grid item>
+                        <Grid 
+                            container
+                            spacing={0}
+                            direction='column'
+                            alignItems='center'
+                        >  
+                            <Paper elevation={6} className={classes.cardPaper} >
+                                <Grid 
+                                container
+                                display='flex'
+                                flexDirection='column'
+                                justifyContent='center'
+                                > 
+                                    <Typography className={classes.cardText}> •••• •••• •••• •••• </Typography>
+                                </Grid>
+                            </Paper>
+                        </Grid>  
                     </Grid>
                 </Grid>
             </Grid>
