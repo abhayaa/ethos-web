@@ -6,6 +6,7 @@ import Home from './pages/index';
 import Dashboard from './pages/dashboard';
 import Auth from './pages/auth';
 import Stripe from './pages/stripe';
+import AdminDash from './pages/adminDash';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route path='/dashboard' component={Dashboard} exact />
         <Route path='/auth' component={Auth} exact />
         <Route path='/payment' component={Stripe} exact />
+        <Route path='/admindash' component={AdminDash} exact />
       </Switch>
     </Router>
   );

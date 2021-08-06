@@ -40,7 +40,6 @@ const Footer = () => {
                         <WebsiteRights>ethos © {new Date().getFullYear()}.
                             All rights reserved.
                         </WebsiteRights>
-
                             <SocialIconLink href="//www.twitter.com/EthosPrivate" target="_blank" aria-label="Twitter">
                                 <FaTwitter />
                             </SocialIconLink>

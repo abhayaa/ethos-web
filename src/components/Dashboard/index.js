@@ -4,15 +4,16 @@ import LoggedInNav from '../LoggedInNav';
 import DashHero from '../DashHero';
 import DashKeyActive from '../DashKeyActive'
 import axios from 'axios';
+import { Button } from '@material-ui/core';
 
-
-// const passport = require('passport');
-// const DiscordStrategy = require('passport-discord').Strategy
+import { Link } from 'react-router-dom';
 
 const DashPage = () => {
     console.log(localStorage)
     const [userExists, setUserExists] = useState(localStorage.getItem('userExists'));
     const [avatarLink, setAvatarLink] = useState(localStorage.getItem('avatarLink'));
+    const [isAdmin, setIsAdmin] = useState(true);
+
 
     let link = window.location.href;
     let code = link.substring(link.indexOf('code=') + 5);

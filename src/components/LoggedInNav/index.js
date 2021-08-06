@@ -13,7 +13,6 @@ import {
 
 import { Avatar } from '@material-ui/core';
 
-
 const LoggedInNav = props => {
 
     const [scrollNav, setScrollNav] = useState(false);

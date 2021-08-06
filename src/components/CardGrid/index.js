@@ -5,7 +5,9 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import { Typography } from "@material-ui/core";
 import DiscordButton from '../../assets/discord.png';
+import { Button } from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
+
 
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
@@ -69,7 +71,14 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: '10px',
         paddingTop: '10px',
         fontFamily: 'monospace'
-    }
+    },
+    tbutton: {
+        '& > *': {
+        margin: theme.spacing(1),
+        fontSize: '13px',
+        fontFamily: 'monospace'
+        }
+    },
 }));
 
 
@@ -114,8 +123,19 @@ const PaperGrid = props => {
                                 justifyContent='center'
                                 > 
                                     <Typography className={classes.cardText}> •••• •••• •••• •••• </Typography>
+                                    <Grid 
+                                        container
+                                        display='flex'
+                                        flexDirection='column'
+                                        justifyContent='center'
+                                    > 
+                                        <IconButton aria-label="edit">
+                                            <EditIcon color='primary' size='small'/> 
+                                        </IconButton>
+                                    </Grid>
                                 </Grid>
                             </Paper>
+                            <Button className={classes.tbutton} color="primary">Cancel Subscription</Button>
                         </Grid>  
                     </Grid>
                 </Grid>
